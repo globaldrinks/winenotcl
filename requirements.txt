@@ -1,2 +1,4 @@
-rapidfuzz
+streamlit
 pandas
+requests
+rapidfuzz
