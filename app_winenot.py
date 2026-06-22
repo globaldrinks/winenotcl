@@ -34,14 +34,14 @@ st.set_page_config(page_title="Asistente Bocas Moradas", page_icon="🍷")
 st.title("🤖 Hola Wine Lover! 🍷")
 
 # 2. Define URL and Load Data
-SHEET_URL = "https://docs.google.com/spreadsheets/d/1ebcnXXefMZt6qKf-RieSgKyltnCa9eVKf6GjWiSra4g/edit"
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1dMokuYm06WAqB8VJxgHEH0nYHzItH-wa59xhoTnDhK8/edit "
 
 def get_csv_url(url):
     try:
         match = re.search(r"/d/([a-zA-Z0-9-_]+)", url)
         if match:
             sheet_id = match.group(1)
-            return f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet=BocasMoradas"
+            return f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet=MOVI"
     except:
         pass
     return None
