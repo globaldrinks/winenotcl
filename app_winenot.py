@@ -125,13 +125,16 @@ if "waiting_for_email" not in st.session_state:
 
 # --- TOAST TRIGGER (Fading Notification) ---
 # If an admin has broadcasted a message globally
+# --- TOAST TRIGGER (Fading Notification) ---
 if broadcast_channel["message"]:
-    # Check if this specific user session has NOT seen this unique message timestamp yet
     if st.session_state.get("last_seen_broadcast") != broadcast_channel["timestamp"]:
-        # Pop up the fading notification
-        st.toast(broadcast_channel["message"], icon="📢")
-        # Save the timestamp to this user's session state so it doesn't repeat on their next click
+        # Using an emoji and bold text to catch attention immediately
+        st.toast(f"📢 **NOTIFICACIÓN:** {broadcast_channel['message']}", icon="🍷")
         st.session_state.last_seen_broadcast = broadcast_channel["timestamp"]
+        
+        # A tiny sleep forces the Streamlit execution thread to pause for a moment,
+        # ensuring the UI renders and holds the element on spotty mobile connections.
+        time.sleep(1)
 
 # Render the persistent chat room logs on screen
 for message in st.session_state.messages:
