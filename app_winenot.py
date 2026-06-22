@@ -30,8 +30,8 @@ if "current_category" not in st.session_state:
     st.session_state.current_category = "main"
 
 # 1. Page Config
-st.set_page_config(page_title="Asistente Bocas Moradas", page_icon="🍷")
-st.title("🤖 Hola Wine Lover! 🍷")
+st.set_page_config(page_title="Asistente MOVI Night", page_icon="🍷")
+st.title("🤖 Hola MOVI Lover! 🍷")
 
 # 2. Define URL and Load Data
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1dMokuYm06WAqB8VJxgHEH0nYHzItH-wa59xhoTnDhK8/edit "
