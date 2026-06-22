@@ -8,6 +8,24 @@ import requests
 from datetime import datetime
 from rapidfuzz import process, fuzz
 
+# --- GLOBAL BROADCAST SYSTEM ---
+# This dictionary is shared across ALL connected users/sessions
+@st.cache_resource
+def get_global_broadcast_channel():
+    return {"message": None, "timestamp": None}
+
+broadcast_channel = get_global_broadcast_channel()
+
+# Check if there is an active broadcast the user hasn't seen yet
+if broadcast_channel["message"]:
+    # Check if this specific session has already acknowledged this broadcast
+    if st.session_state.get("last_seen_broadcast") != broadcast_channel["timestamp"]:
+        # Display the announcement at the very top of the app
+        st.toast(f"📢 **ANNOUNCEMENT:** {broadcast_channel['message']}", icon="🔔")
+        # Alternative: use st.info() if you want a persistent banner instead of a fading toast
+        # st.info(f"📢 **Announcement:** {broadcast_channel['message']}")
+
+
 # --- VISIT COUNTER LOGIC ---
 COUNTER_FILE = "counter.txt"
 if not os.path.exists(COUNTER_FILE):
@@ -72,19 +90,59 @@ def load_faqs_tree():
 
 df_faqs = load_faqs_tree()
 
-# 3. Create/Render Chat History
+# --- INITIALIZE SESSION STATE FOR THE TREE ---
+if "current_category" not in st.session_state:
+    st.session_state.current_category = "main"
+
+# --- GLOBAL BROADCAST SYSTEM ---
+# This dictionary lives in the server memory and is shared by all connected users
+@st.cache_resource
+def get_global_broadcast_channel():
+    return {"message": None, "timestamp": None}
+
+broadcast_channel = get_global_broadcast_channel()
+
+# 1. Page Config
+st.set_page_config(page_title="Asistente Bocas Moradas", page_icon="🍷")
+st.title("🤖 Hola Wine Lover! 🍷")
+
+# 2. Define URL and Load Data
+# ... [Keep your existing get_csv_url, clean_string, and load_faqs_tree functions here] ...
+df_faqs = load_faqs_tree()
+
+
+# =====================================================================
+# 3. CREATE / RENDER CHAT HISTORY & LIVE BROADCASTS
+# =====================================================================
+
 if "messages" not in st.session_state:
     st.session_state.messages = [
-        {"role": "assistant", "content": "👋 Estoy acá para ayudarte! Explora los vinos presentes en MOVI Night o hazme una pregunta directamente."}
+        {"role": "assistant", "content": "👋 Estoy acá para ayudarte! Explora las opciones de abajo o hazme una pregunta directamente."}
     ]
 
 if "waiting_for_email" not in st.session_state:
     st.session_state.waiting_for_email = None
 
-# Renderizar el historial existente primero
+# --- TOAST TRIGGER (Fading Notification) ---
+# If an admin has broadcasted a message globally
+if broadcast_channel["message"]:
+    # Check if this specific user session has NOT seen this unique message timestamp yet
+    if st.session_state.get("last_seen_broadcast") != broadcast_channel["timestamp"]:
+        # Pop up the fading notification
+        st.toast(broadcast_channel["message"], icon="📢")
+        # Save the timestamp to this user's session state so it doesn't repeat on their next click
+        st.session_state.last_seen_broadcast = broadcast_channel["timestamp"]
+
+# Render the persistent chat room logs on screen
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
+# =====================================================================
+
+
+# 4. PREDEFINED BUTTONS INTERFACE (DYNAMIC TREE)
+# ... [The rest of your code continues below here] ...
 
 # 4. PREDEFINED BUTTONS INTERFACE (DYNAMIC TREE)
 st.write("---") 
@@ -191,3 +249,22 @@ with st.expander("🔒 Admin Panel (Leads & Stats)"):
         with open(COUNTER_FILE, "r", encoding="utf-8") as f:
             total_visits = f.read().strip()
         st.write(f"📈 **Total Website Visits:** `{total_visits}`")
+        
+        st.write("---")
+        st.subheader("📢 Broadcast Alert to All Users")
+        broadcast_text = st.text_input("Enter toast message:", placeholder="e.g., ¡Cata especial en stand 3 en 5 minutos! 🍷")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🚀 Send Live Toast", use_container_width=True):
+                if broadcast_text.strip():
+                    broadcast_channel["message"] = broadcast_text.strip()
+                    broadcast_channel["timestamp"] = time.time()  # Generates unique message ID
+                    st.success("Toast broadcasted successfully!")
+                    st.rerun()
+        with col2:
+            if st.button("🗑️ Clear Active Toast", use_container_width=True):
+                broadcast_channel["message"] = None
+                broadcast_channel["timestamp"] = None
+                st.info("Broadcast cleared.")
+                st.rerun()
