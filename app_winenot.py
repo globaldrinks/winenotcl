@@ -110,7 +110,6 @@ st.title("🤖 Hola Wine Lover! 🍷")
 # ... [Keep your existing get_csv_url, clean_string, and load_faqs_tree functions here] ...
 df_faqs = load_faqs_tree()
 
-
 # =====================================================================
 # 3. CREATE / RENDER CHAT HISTORY & LIVE BROADCASTS
 # =====================================================================
@@ -123,18 +122,11 @@ if "messages" not in st.session_state:
 if "waiting_for_email" not in st.session_state:
     st.session_state.waiting_for_email = None
 
-# --- TOAST TRIGGER (Fading Notification) ---
-# If an admin has broadcasted a message globally
-# --- TOAST TRIGGER (Fading Notification) ---
+# --- PERSISTENT BANNER TRIGGER ---
+# If an admin has broadcasted a message, display it as a beautiful, unmissable block
 if broadcast_channel["message"]:
-    if st.session_state.get("last_seen_broadcast") != broadcast_channel["timestamp"]:
-        # Using an emoji and bold text to catch attention immediately
-        st.toast(f"📢 **NOTIFICACIÓN:** {broadcast_channel['message']}", icon="🍷")
-        st.session_state.last_seen_broadcast = broadcast_channel["timestamp"]
-        
-        # A tiny sleep forces the Streamlit execution thread to pause for a moment,
-        # ensuring the UI renders and holds the element on spotty mobile connections.
-        time.sleep(1)
+    st.info(f"📢 **AVISO RECIENTE:** {broadcast_channel['message']}")
+    st.write("") # Small spacing element
 
 # Render the persistent chat room logs on screen
 for message in st.session_state.messages:
