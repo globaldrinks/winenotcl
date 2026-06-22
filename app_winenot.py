@@ -261,9 +261,20 @@ with st.expander("🔒 Admin Panel (Leads & Stats)"):
         with col1:
             if st.button("🚀 Send Live Toast", use_container_width=True):
                 if broadcast_text.strip():
+                    new_timestamp = time.time()
+                    
+                    # 1. Update the global channel
                     broadcast_channel["message"] = broadcast_text.strip()
-                    broadcast_channel["timestamp"] = time.time()  # Generates unique message ID
+                    broadcast_channel["timestamp"] = new_timestamp
+                    
+                    # 2. Pre-emptively mark it as "seen" for the Admin's own session 
+                    # so the admin doesn't get a double pop-up
+                    st.session_state.last_seen_broadcast = new_timestamp
+                    
                     st.success("Toast broadcasted successfully!")
+                    
+                    # 3. Give the server a brief millisecond to register the state before rerunning
+                    time.sleep(0.2)
                     st.rerun()
         with col2:
             if st.button("🗑️ Clear Active Toast", use_container_width=True):
