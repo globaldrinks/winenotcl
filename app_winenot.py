@@ -49,7 +49,7 @@ if "current_category" not in st.session_state:
 
 # 1. Page Config
 st.set_page_config(page_title="Asistente MOVI Night", page_icon="🍷")
-st.title("Asistente Virtual MOVI 🍷")
+st.title("Asistente Virtual MOVI Night 🍷")
 
 # 2. Define URL and Load Data
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1dMokuYm06WAqB8VJxgHEH0nYHzItH-wa59xhoTnDhK8/edit "
@@ -103,8 +103,8 @@ def get_global_broadcast_channel():
 broadcast_channel = get_global_broadcast_channel()
 
 # 1. Page Config
-st.set_page_config(page_title="Asistente Bocas Moradas", page_icon="🍷")
-st.title("🤖 Hola Wine Lover! 🍷")
+st.set_page_config(page_title="Asistente MOVI Night", page_icon="🍷")
+st.title("🤖 Hola Wine Lover! ")
 
 # 2. Define URL and Load Data
 # ... [Keep your existing get_csv_url, clean_string, and load_faqs_tree functions here] ...
