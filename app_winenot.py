@@ -48,7 +48,7 @@ if "current_category" not in st.session_state:
     st.session_state.current_category = "main"
 
 # 1. Page Config
-st.set_page_config(page_title="Asistente Wine Not", page_icon="🍷")
+st.set_page_config(page_title="Wine Not - asistente del vino", page_icon="🍷")
 st.title("Asistente Virtual para tu visita 🍇")
 
 # 2. Define URL and Load Data
@@ -103,7 +103,7 @@ def get_global_broadcast_channel():
 broadcast_channel = get_global_broadcast_channel()
 
 # 1. Page Config
-st.set_page_config(page_title=" Wine Not ", page_icon="🍇")
+# st.set_page_config(page_title=" Wine Not ", page_icon="🍇")
 st.title("Hola Wine Lover 🍷! ")
 
 # 2. Define URL and Load Data
