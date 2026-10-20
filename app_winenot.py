@@ -103,8 +103,8 @@ def get_global_broadcast_channel():
 broadcast_channel = get_global_broadcast_channel()
 
 # 1. Page Config
-st.set_page_config(page_title=" MOVI Night", page_icon="🍷")
-st.title("🤖 Hola Wine Lover! ")
+st.set_page_config(page_title=" MOVI Night 2026", page_icon="🍇")
+st.title("Hola Wine Lover 🍷! ")
 
 # 2. Define URL and Load Data
 # ... [Keep your existing get_csv_url, clean_string, and load_faqs_tree functions here] ...
