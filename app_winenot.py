@@ -136,8 +136,6 @@ for message in st.session_state.messages:
 # =====================================================================
 
 
-# 4. PREDEFINED BUTTONS INTERFACE (DYNAMIC TREE)
-# ... [The rest of your code continues below here] ...
 
 # 4. PREDEFINED BUTTONS INTERFACE (DYNAMIC TREE)
 st.write("---") 
@@ -196,7 +194,7 @@ if final_input:
         user_email = final_input.strip()
         unanswered_question = st.session_state.waiting_for_email
         
-        FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdrAQb9Y9ncokyk-IS5yPSz5spJxxWZBKPKr3cPeeVYMlxngw/viewform"
+        FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdrAQb9Y9ncokyk-IS5yPSz5spJxxWZBKPKr3cPeeVYMlxngw/formResponse"
         form_data = {
             "entry.1621915346": user_email,          
             "entry.409076594": unanswered_question   
