@@ -196,7 +196,7 @@ if final_input:
         user_email = final_input.strip()
         unanswered_question = st.session_state.waiting_for_email
         
-        FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd97qfIqBnK7fy2qKNQJ4t5vauriks29CFy-KXSj6qFGXTsbA/formResponse"
+        FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdrAQb9Y9ncokyk-IS5yPSz5spJxxWZBKPKr3cPeeVYMlxngw/viewform"
         form_data = {
             "entry.1621915346": user_email,          
             "entry.409076594": unanswered_question   
