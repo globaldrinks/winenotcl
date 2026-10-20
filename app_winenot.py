@@ -59,7 +59,7 @@ def get_csv_url(url):
         match = re.search(r"/d/([a-zA-Z0-9-_]+)", url)
         if match:
             sheet_id = match.group(1)
-            return f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet=MOVI"
+            return f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet=WineNot"
     except:
         pass
     return None
